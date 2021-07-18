@@ -1,0 +1,17 @@
+{
+  "name": "r3dummyapp",
+  "version": "1.0.0",
+  "description": "Recite 3 Dummy Application to test out endpoints",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "Recite"
+  ],
+  "author": "Fuad Abdullah",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^8.7.1"
+  }
+}
