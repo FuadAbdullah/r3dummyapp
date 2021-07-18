@@ -1,16 +1,16 @@
 const firebase = require('firebase')
 var app;
-const ipAddress = 'ardraspi3bp.ddns.net'
+const ipAddress = 'r-3-backend-uex48.ondigitalocean.app'
 
 const init = async () => {
     const config = {
-        apiKey: "AIzaSyCs1BgO4O0kkNkR3HapcTKSPAWJ3izlzto",
-        authDomain: "recite3admin.firebaseapp.com",
-        projectId: "recite3admin",
-        storageBucket: "recite3admin.appspot.com",
-        messagingSenderId: "308612611342",
-        appId: "1:308612611342:web:fad1bcefadc3aabb9d6b5f",
-        measurementId: "G-2WW9F9X9BY"
+        apiKey: "AIzaSyCPGmGung2Q8vImY4kIMYm1rX0RIoBCjNU",
+        authDomain: "recite-3.firebaseapp.com",
+        projectId: "recite-3",
+        storageBucket: "recite-3.appspot.com",
+        messagingSenderId: "581961862369",
+        appId: "1:581961862369:web:50d8f7e6b89fa6a7293ba0",
+        measurementId: "G-T5E5VF4DMJ"
     }
 
     // Initialize app
@@ -36,9 +36,7 @@ const loginAdmin = async (flow, id, flag, name, email, password, role, auth, lan
     // aiz2Iwie2
 
     // Admin
-    const loginemail = 'chikayasahaku@jourrapide.com'
-    const loginpassword = 'Ro7aeshie'
-    await app.auth().signInWithEmailAndPassword(loginemail, loginpassword)
+    await app.auth().signInWithEmailAndPassword(email, password)
         .then(async (_) => {
             switch (flow) {
                 case 'register':
@@ -86,9 +84,7 @@ const loginCS = async (flow, name, email, languagePref, role, password, id) => {
     // abuab123
 
     // CS
-    const loginemail = 'abuabi@gmail.com'
-    const loginpassword = 'abuab123'
-    await app.auth().signInWithEmailAndPassword(loginemail, loginpassword)
+    await app.auth().signInWithEmailAndPassword(email, password)
         .then(async (_) => {
             switch (flow) {
                 case 'getme':
@@ -164,7 +160,7 @@ const loginUser = async (flow, id, flag, chapter, verse, submissionType, submiss
 }
 
 const register = async (name, email, password, role, auth) => {
-    const http = require('http')
+    const https = require('https')
 
     try {
         let path, options
@@ -192,7 +188,6 @@ const register = async (name, email, password, role, auth) => {
         if (auth) {
             options = {
                 hostname: ipAddress,
-                port: 3000,
                 path: path,
                 method: 'POST',
                 headers: {
@@ -203,7 +198,6 @@ const register = async (name, email, password, role, auth) => {
         } else {
             options = {
                 hostname: ipAddress,
-                port: 3000,
                 path: path,
                 method: 'POST',
                 headers: {
@@ -212,7 +206,7 @@ const register = async (name, email, password, role, auth) => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -240,13 +234,12 @@ const getToken = async () => {
 }
 
 const getDummy = async () => {
-    const http = require('http')
+    const http = require('https')
 
     try {
 
         const options = {
             hostname: ipAddress,
-            port: 3000,
             path: '/api/v1/admin/dummy',
             method: 'GET',
             headers: {
@@ -939,7 +932,7 @@ const loginApp = async () => {
     loginCheck()
 
     // User accesses dummy
-    loginUser('dummy', null, null, null, null, null, null, null, 'NajibIyadDaher@armyspy.com', null, null, 'ahrahx3A')
+    // loginUser('dummy', null, null, null, null, null, null, null, 'fab072301@gmail.com', null, null, '1234567890')
 
     // User retrieves his/her own profile
     // loginUser('getme')
@@ -972,7 +965,7 @@ const loginApp = async () => {
     // loginUser('getsubmissionpermission')
 
     // CS accesses dummy
-    // loginCS('dummy')
+    loginCS('dummy', null, 'aminahzulkifli@gmail.com', null, null, '0987654321')
 
     // CS retrieves his/her own profile
     // loginCS('getme')
@@ -996,7 +989,7 @@ const loginApp = async () => {
     // loginAdmin('register', null, null, 'Naho Nagasawa', 'NahoNagasawa@dayrep.com', 'aiz2Iwie2', 'admin', true)
 
     // Admin accesses dummy
-    // loginAdmin('dummy')
+    loginAdmin('dummy', null, null, null, 'ramadanrafique@gmail.com', '12340987')
 
     // Admin sets recital by ID's reviewed flag 
     // loginAdmin('setreviewed', '60ef3072ced635296c8a26fc', false)
@@ -1041,8 +1034,12 @@ const forgotPasswordApp = async () => {
 
 const registrationApp = async () => {
     await init()
-    register('Najib Iyad Daher', 'NajibIyadDaher@armyspy.com', 'ahrahx3A', 'user', false)
+    
+    register('Ramadan bin Rafique', 'ramadanrafique@gmail.com', '12340987', 'user', false)
+    // register('Siti Aminah binti Zulkifli', 'aminahzulkifli@gmail.com', '0987654321', 'cs', false)
+    // register('Muhammad Fuad bin Abdullah', 'fab072301@gmail.com', '1234567890', 'user', false)
+    // register('Najib Iyad Daher', 'NajibIyadDaher@armyspy.com', 'ahrahx3A', 'user', false)
     // register('Majeeda Nazirah Fakhoury', 'MajeedaNazirahFakhoury@dayrep.com', 'Thahfo8aaJ', 'user', false)
 }
 
-loginApp()
+registrationApp()
