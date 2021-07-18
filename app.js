@@ -28,7 +28,7 @@ const loginCheck = async () => {
     })
 }
 
-const loginAdmin = async (flow, id, flag, name, email, password, role, auth, languagePref) => {
+const loginAdmin = async (flow, id, flag, name, email, password, role, auth, languagePref, emailReg, passwordReg) => {
     // ChikayoSahaku@jourrapide.com
     // Ro7aeshie
 
@@ -40,7 +40,7 @@ const loginAdmin = async (flow, id, flag, name, email, password, role, auth, lan
         .then(async (_) => {
             switch (flow) {
                 case 'register':
-                    await register(name, email, password, role, auth)
+                    await register(name, emailReg, passwordReg, role, auth)
                     break
                 case 'setreviewed':
                     await setReviewedFlag(id, flag)
@@ -503,12 +503,11 @@ const getCSProfile = async (id) => {
 }
 
 const getMeAdmin = async () => {
-    const http = require('http')
+    const https = require('https')
 
     try {
         const options = {
             hostname: ipAddress,
-            port: 3000,
             path: `/api/v1/admin/auth/getMe`,
             method: 'GET',
             headers: {
@@ -516,7 +515,7 @@ const getMeAdmin = async () => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -965,7 +964,7 @@ const loginApp = async () => {
     // loginUser('getsubmissionpermission')
 
     // CS accesses dummy
-    loginCS('dummy', null, 'aminahzulkifli@gmail.com', null, null, '0987654321')
+    // loginCS('dummy', null, 'aminahzulkifli@gmail.com', null, null, '0987654321')
 
     // CS retrieves his/her own profile
     // loginCS('getme')
@@ -986,10 +985,10 @@ const loginApp = async () => {
     // loginCS('submitfeedback', null, null, null, null, null, '60ef30b7c3a4d21d7c549867')
 
     // Admin registers another admin
-    // loginAdmin('register', null, null, 'Naho Nagasawa', 'NahoNagasawa@dayrep.com', 'aiz2Iwie2', 'admin', true)
+    // loginAdmin('register', null, null, 'Naho Nagasawa', 'ramadanrafique@gmail.com', '12340987', 'admin', true, null, 'NahoNagasawa@dayrep.com', 'aiz2Iwie2')
 
     // Admin accesses dummy
-    loginAdmin('dummy', null, null, null, 'ramadanrafique@gmail.com', '12340987')
+    loginAdmin('dummy', null, null, null, 'NahoNagasawa@dayrep.com', 'aiz2Iwie2')
 
     // Admin sets recital by ID's reviewed flag 
     // loginAdmin('setreviewed', '60ef3072ced635296c8a26fc', false)
@@ -1007,7 +1006,7 @@ const loginApp = async () => {
     // loginAdmin('getprofilecs', null)
 
     // Admin retrieves his/her own profile
-    // loginAdmin('getme')
+    // loginAdmin('getme', null, null, null, 'ramadanrafique@gmail.com', '12340987')
 
     // Admin updates his/her profile
     // loginAdmin('updateme', null, null, 'Chikaya Sahaku', 'chikayasahaku@jourrapide.com', null, 'admin', null, {
@@ -1042,4 +1041,4 @@ const registrationApp = async () => {
     // register('Majeeda Nazirah Fakhoury', 'MajeedaNazirahFakhoury@dayrep.com', 'Thahfo8aaJ', 'user', false)
 }
 
-registrationApp()
+loginApp()
