@@ -346,8 +346,14 @@ const getRecital = async (id, flag) => {
             // console.log(req)
             console.log(res.statusCode)
 
+            let chunk = []
             res.on('data', data => {
-                console.log(JSON.parse(data))
+                chunk.push(data)
+            })
+            .on('end', () => {
+                let data = Buffer.concat(chunk)
+                let readableData = JSON.parse(data)
+                console.log(readableData)
             })
 
             res.on('error', error => {
@@ -365,26 +371,31 @@ const getRecital = async (id, flag) => {
 }
 
 const setReviewedFlag = async (id, flag) => {
-    const http = require('http')
+    const https = require('https')
 
     try {
 
         const options = {
             hostname: ipAddress,
-            port: 3000,
             path: `/api/v1/admin/recital/setReviewed/${id}/${flag}`,
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${await getToken()}`
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
+            let chunk = []
             res.on('data', data => {
-                console.log(JSON.parse(data))
+                chunk.push(data)
+            })
+            .on('end', () => {
+                let data = Buffer.concat(chunk)
+                let readableData = JSON.parse(data)
+                console.log(readableData)
             })
 
             res.on('error', error => {
@@ -401,7 +412,7 @@ const setReviewedFlag = async (id, flag) => {
 }
 
 const getUnreviewedRecital = async (id) => {
-    const http = require('http')
+    const https = require('https')
 
     try {
         let options
@@ -409,7 +420,6 @@ const getUnreviewedRecital = async (id) => {
         if (id) {
             options = {
                 hostname: ipAddress,
-                port: 3000,
                 path: `/api/v1/admin/recital/getRecital/${id}`,
                 method: 'GET',
                 headers: {
@@ -419,7 +429,6 @@ const getUnreviewedRecital = async (id) => {
         } else {
             options = {
                 hostname: ipAddress,
-                port: 3000,
                 path: `/api/v1/admin/recital/getRecitals/`,
                 method: 'GET',
                 headers: {
@@ -428,12 +437,18 @@ const getUnreviewedRecital = async (id) => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
+            let chunk = []
             res.on('data', data => {
-                console.log(JSON.parse(data))
+                chunk.push(data)
+            })
+            .on('end', () => {
+                let data = Buffer.concat(chunk)
+                let readableData = JSON.parse(data)
+                console.log(readableData)
             })
 
             res.on('error', error => {
@@ -480,9 +495,17 @@ const getCSProfile = async (id) => {
             // console.log(req)
             console.log(res.statusCode)
 
+            // Latest way to prevent JSON transmission from failing halfway
+            let chunk = []
             res.on('data', data => {
-                console.log(JSON.parse(data))
+                chunk.push(data)
             })
+            .on('end', () => {
+                let data = Buffer.concat(chunk)
+                let readableData = JSON.parse(data)
+                console.log(readableData)
+            })
+            //////////////////////////////////////////////////////////////
 
             res.on('error', error => {
                 console.error(JSON.parse(error))
@@ -994,23 +1017,6 @@ const loginApp = async () => {
     // Admin accesses dummy
     // loginAdmin('dummy', null, null, null, 'NahoNagasawa@dayrep.com', 'aiz2Iwie2')
 
-    // Admin sets recital by ID's reviewed flag 
-    // loginAdmin('setreviewed', '60ef3072ced635296c8a26fc', false)
-
-    // Admin retrieves single unreviewed submission by ID
-    // loginAdmin('retrieve', '60ee99d0f12d6d6510882958')
-
-    // Admin retrieves all unreviewed submissions
-    // loginAdmin('retrieve', null)
-
-    // Tested
-    // Admin retrieves single CS profile by ID
-    // loginAdmin('getprofilecs', '60f473b1705671001148f877', null, null, 'ramadanrafique@gmail.com', '12340987')
-
-    // Tested
-    // Admin retrieves all CS profiles
-    // loginAdmin('getprofilecs', null, null, null, 'ramadanrafique@gmail.com', '12340987')
-
     // Tested
     // Admin retrieves his/her own profile
     // loginAdmin('getme', null, null, null, 'ramadanrafique@gmail.com', '12340987')
@@ -1025,6 +1031,49 @@ const loginApp = async () => {
     // Tested
     // Admin updates his/her account's password
     // loginAdmin('updatemypassword', null, null, null, 'ramadanrafique@gmail.com', '12340987', 'admin', null, null, null, '1337abcd' )
+
+    // Tested however found a bug where unknown ID will still return status 200
+    // Admin sets recital by ID's reviewed flag 
+    // loginAdmin('setreviewed', '60f71f4ed35a820011b4d291', false, null, 'ramadanrafique@gmail.com', '12340987')
+
+    // Tested
+    // Admin retrieves single unreviewed submission by ID
+    // loginAdmin('retrieve', '60f71fbcd35a820011b4d294', null, null, 'ramadanrafique@gmail.com', '12340987')
+
+    // Tested
+    // Admin retrieves all unreviewed submissions
+    // loginAdmin('retrieve', null, null, null, 'ramadanrafique@gmail.com', '12340987')
+
+    // Tested
+    // Admin retrieves single CS profile by ID
+    // loginAdmin('getprofilecs', '60f71e58d35a820011b4d28a', null, null, 'ramadanrafique@gmail.com', '12340987')
+
+    // Tested
+    // Admin retrieves all CS profiles
+    // loginAdmin('getprofilecs', null, null, null, 'ramadanrafique@gmail.com', '12340987')
+
+    // IDs
+    // 60f71e44d35a820011b4d289 rev
+    // 60f71e93d35a820011b4d28c rev
+    // 60f71ebdd35a820011b4d28d rev
+    // 60f71ee1d35a820011b4d28e rev
+    // 60f71f05d35a820011b4d28f rev
+    // 60f71f2fd35a820011b4d290 rev
+    // 60f71f4ed35a820011b4d291 set true > set false
+    // 60f71f74d35a820011b4d292 set true
+    // 60f71f9dd35a820011b4d293
+    // 60f71fbcd35a820011b4d294
+
+    // Create Recital
+    // User submits recital
+    // loginUser('submit', null, null, 108, 3, 'surah', '/audio10.mp3', null, 'fab072301@gmail.com', null, 'user', '1234567890')
+    // loginUser('submit', null, null, 105, 5, 'shorts', '/audio11.mp3', null, 'rukiahhassan@gmail.com', null, 'user', '12340987')
+
+    // Create Feedback
+    // CS submits his/her feedback of the selected user submission
+    // loginCS('submitfeedback', null, 'aminahzulkifli@gmail.com', null, 'cs', '0987654321', '60f71f05d35a820011b4d28f')
+    // loginCS('submitfeedback', null, 'maimunahosman@gmail.com', null, 'cs', '999987654', '60f71f2fd35a820011b4d290')
+
 
     setTimeout(() => {
         app.auth().signOut().then(() => {
@@ -1043,7 +1092,9 @@ const forgotPasswordApp = async () => {
 const registrationApp = async () => {
     await init()
 
-    register('Ramadan bin Rafique', 'ramadanrafique@gmail.com', '12340987', 'user', false)
+    // register('Aminah Maimunah Iskandariah binti Osman', 'maimunahosman@gmail.com', '999987654', 'cs', false)
+    // register('Nur Rukiah binti Hassan', 'rukiahhassan@gmail.com', '12340987', 'user', false)
+    // register('Ramadan bin Rafique', 'ramadanrafique@gmail.com', '12340987', 'user', false)
     // register('Siti Aminah binti Zulkifli', 'aminahzulkifli@gmail.com', '0987654321', 'cs', false)
     // register('Muhammad Fuad bin Abdullah', 'fab072301@gmail.com', '1234567890', 'user', false)
     // register('Najib Iyad Daher', 'NajibIyadDaher@armyspy.com', 'ahrahx3A', 'user', false)
