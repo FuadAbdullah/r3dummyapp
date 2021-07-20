@@ -36,9 +36,7 @@ const loginAdmin = async (flow, id, flag, name, email, password, role, auth, lan
     // aiz2Iwie2
 
     // Admin
-    const loginemail = 'chikayasahaku@jourrapide.com'
-    const loginpassword = 'Ro7aeshie'
-    await app.auth().signInWithEmailAndPassword(loginemail, loginpassword)
+    await app.auth().signInWithEmailAndPassword(email, password)
         .then(async (_) => {
             switch (flow) {
                 case 'register':
@@ -86,9 +84,7 @@ const loginCS = async (flow, name, email, languagePref, role, password, id) => {
     // abuab123
 
     // CS
-    const loginemail = 'abuabi@gmail.com'
-    const loginpassword = 'abuab123'
-    await app.auth().signInWithEmailAndPassword(loginemail, loginpassword)
+    await app.auth().signInWithEmailAndPassword(email, password)
         .then(async (_) => {
             switch (flow) {
                 case 'getme':
@@ -939,7 +935,7 @@ const loginApp = async () => {
     loginCheck()
 
     // User accesses dummy
-    loginUser('dummy', null, null, null, null, null, null, null, 'NajibIyadDaher@armyspy.com', null, null, 'ahrahx3A')
+    // loginUser('dummy', null, null, null, null, null, null, null, 'fab072301@gmail.com', null, null, '0123456789')
 
     // User retrieves his/her own profile
     // loginUser('getme')
@@ -957,7 +953,7 @@ const loginApp = async () => {
     // loginUser('deleteme', null, false, null, null, null, null, null, null, null, 'user')
 
     // User submits recital
-    // loginUser('submit', null, null, 114, 5, 'shorts', 'recite', '/audio4.mp3')
+    // loginUser('submit', null, null, 1, 7, 'fasihFatihah', 'recite', '/audio4.mp3', 'fab072301@gmail.com', null, null, '0123456789')
 
     // User retrieve a single recital
     // loginUser('retrieve', '60ef30b7c3a4d21d7c549867')
@@ -990,7 +986,7 @@ const loginApp = async () => {
     // loginCS('deleteme', null, null, null, 'cs')
 
     // CS submits his/her feedback of the selected user submission
-    // loginCS('submitfeedback', null, null, null, null, null, '60ef30b7c3a4d21d7c549867')
+    // loginCS('submitfeedback', null, 'NajibIyadDaher@armyspy.com', null, 'cs', 'ahrahx3A', '60f6ece58d635e00130c70b0')
 
     // Admin registers another admin
     // loginAdmin('register', null, null, 'Naho Nagasawa', 'NahoNagasawa@dayrep.com', 'aiz2Iwie2', 'admin', true)
@@ -1041,7 +1037,8 @@ const forgotPasswordApp = async () => {
 
 const registrationApp = async () => {
     await init()
-    register('Najib Iyad Daher', 'NajibIyadDaher@armyspy.com', 'ahrahx3A', 'user', false)
+    // register('Muhammad Fuad bin Abdullah', 'fab072301@gmail.com', '0123456789', 'user', false)
+    register('Najib Iyad Daher', 'NajibIyadDaher@armyspy.com', 'ahrahx3A', 'cs', false)
     // register('Majeeda Nazirah Fakhoury', 'MajeedaNazirahFakhoury@dayrep.com', 'Thahfo8aaJ', 'user', false)
 }
 
