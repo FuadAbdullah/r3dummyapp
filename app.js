@@ -58,7 +58,7 @@ const loginAdmin = async (flow, id, flag, name, email, password, role, auth, lan
                     await updateMe(name, email, languagePref, role)
                     break
                 case 'updatemypassword':
-                    await updateMyPassword(password, role)
+                    await updateMyPassword(passwordReg, role)
                     break
                 case 'deleteme':
                     await deleteMe(role)
@@ -73,7 +73,7 @@ const loginAdmin = async (flow, id, flag, name, email, password, role, auth, lan
 
 }
 
-const loginCS = async (flow, name, email, languagePref, role, password, id) => {
+const loginCS = async (flow, name, email, languagePref, role, password, id, emailReg, passwordReg) => {
     // HudhayfahKazimTuma@dayrep.com
     // aiquo6OoV9m
 
@@ -91,10 +91,10 @@ const loginCS = async (flow, name, email, languagePref, role, password, id) => {
                     await getMeCS()
                     break
                 case 'updateme':
-                    await updateMe(name, email, languagePref, role)
+                    await updateMe(name, emailReg, languagePref, role)
                     break
                 case 'updatemypassword':
-                    await updateMyPassword(password, role)
+                    await updateMyPassword(passwordReg, role)
                     break
                 case 'submitfeedback':
                     await submitFeedback(id)
@@ -112,7 +112,7 @@ const loginCS = async (flow, name, email, languagePref, role, password, id) => {
 
 }
 
-const loginUser = async (flow, id, flag, chapter, verse, submissionType, submissionURL, name, email, languagePref, role, password) => {
+const loginUser = async (flow, id, flag, chapter, verse, submissionType, submissionURL, name, email, languagePref, role, password, emailReg, passwordReg) => {
     // User
     // KevinSTrembley@dayrep.com
     // Ohz9ohPhu9
@@ -135,10 +135,10 @@ const loginUser = async (flow, id, flag, chapter, verse, submissionType, submiss
                     await getMeUser()
                     break
                 case 'updateme':
-                    await updateMe(name, email, languagePref, role)
+                    await updateMe(name, emailReg, languagePref, role)
                     break
                 case 'updatemypassword':
-                    await updateMyPassword(password, role)
+                    await updateMyPassword(passwordReg, role)
                     break
                 case 'getrtbalance':
                     await getRTBalance()
@@ -270,7 +270,7 @@ const getDummy = async () => {
 }
 
 const submitRecital = async (chapter, verse, submissionType, submissionURL) => {
-    const http = require('http')
+    const https = require('https')
 
     try {
 
@@ -285,7 +285,6 @@ const submitRecital = async (chapter, verse, submissionType, submissionURL) => {
 
         const options = {
             hostname: ipAddress,
-            port: 3000,
             path: '/api/v1/recital/submit',
             method: 'POST',
             headers: {
@@ -294,7 +293,7 @@ const submitRecital = async (chapter, verse, submissionType, submissionURL) => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -318,7 +317,7 @@ const submitRecital = async (chapter, verse, submissionType, submissionURL) => {
 }
 
 const getRecital = async (id, flag) => {
-    const http = require('http')
+    const https = require('https')
 
     try {
         let options
@@ -326,7 +325,6 @@ const getRecital = async (id, flag) => {
         if (id) {
             options = {
                 hostname: ipAddress,
-                port: 3000,
                 path: `/api/v1/recital/getRecital/${id}`,
                 method: 'GET',
                 headers: {
@@ -336,7 +334,6 @@ const getRecital = async (id, flag) => {
         } else {
             options = {
                 hostname: ipAddress,
-                port: 3000,
                 path: `/api/v1/recital/getRecitals/${flag}`,
                 method: 'GET',
                 headers: {
@@ -345,7 +342,7 @@ const getRecital = async (id, flag) => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -454,7 +451,7 @@ const getUnreviewedRecital = async (id) => {
 }
 
 const getCSProfile = async (id) => {
-    const http = require('http')
+    const https = require('https')
 
     try {
         let options
@@ -462,7 +459,6 @@ const getCSProfile = async (id) => {
         if (id) {
             options = {
                 hostname: ipAddress,
-                port: 3000,
                 path: `/api/v1/admin/cs/getCSProfile/${id}`,
                 method: 'GET',
                 headers: {
@@ -472,7 +468,6 @@ const getCSProfile = async (id) => {
         } else {
             options = {
                 hostname: ipAddress,
-                port: 3000,
                 path: `/api/v1/admin/cs/getCSProfiles`,
                 method: 'GET',
                 headers: {
@@ -481,7 +476,7 @@ const getCSProfile = async (id) => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -537,12 +532,11 @@ const getMeAdmin = async () => {
 }
 
 const getMeCS = async () => {
-    const http = require('http')
+    const https = require('https')
 
     try {
         const options = {
             hostname: ipAddress,
-            port: 3000,
             path: `/api/v1/cs/auth/getMe`,
             method: 'GET',
             headers: {
@@ -550,7 +544,7 @@ const getMeCS = async () => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -572,12 +566,11 @@ const getMeCS = async () => {
 }
 
 const getMeUser = async () => {
-    const http = require('http')
+    const https = require('https')
 
     try {
         const options = {
             hostname: ipAddress,
-            port: 3000,
             path: `/api/v1/user/auth/getMe`,
             method: 'GET',
             headers: {
@@ -585,7 +578,7 @@ const getMeUser = async () => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -607,7 +600,7 @@ const getMeUser = async () => {
 }
 
 const updateMe = async (name, email, languagePref, role) => {
-    const http = require('http')
+    const https = require('https')
 
     try {
         let path
@@ -632,7 +625,6 @@ const updateMe = async (name, email, languagePref, role) => {
 
         const options = {
             hostname: ipAddress,
-            port: 3000,
             path: path,
             method: 'PUT',
             headers: {
@@ -641,7 +633,7 @@ const updateMe = async (name, email, languagePref, role) => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -665,7 +657,7 @@ const updateMe = async (name, email, languagePref, role) => {
 }
 
 const updateMyPassword = async (password, role) => {
-    const http = require('http')
+    const https = require('https')
 
     try {
         let path
@@ -688,7 +680,6 @@ const updateMyPassword = async (password, role) => {
 
         const options = {
             hostname: ipAddress,
-            port: 3000,
             path: path,
             method: 'PUT',
             headers: {
@@ -697,7 +688,7 @@ const updateMyPassword = async (password, role) => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -721,7 +712,7 @@ const updateMyPassword = async (password, role) => {
 }
 
 const submitFeedback = async (id) => {
-    const http = require('http')
+    const https = require('https')
 
     try {
 
@@ -744,7 +735,6 @@ const submitFeedback = async (id) => {
 
         const options = {
             hostname: ipAddress,
-            port: 3000,
             path: `/api/v1/recital/submitFeedback/${id}`,
             method: 'PUT',
             headers: {
@@ -753,7 +743,7 @@ const submitFeedback = async (id) => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -777,12 +767,11 @@ const submitFeedback = async (id) => {
 }
 
 const getRTBalance = async () => {
-    const http = require('http')
+    const https = require('https')
 
     try {
         const options = {
             hostname: ipAddress,
-            port: 3000,
             path: `/api/v1/user/getRTBalance`,
             method: 'GET',
             headers: {
@@ -790,7 +779,7 @@ const getRTBalance = async () => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -859,12 +848,11 @@ const deleteMe = async (role) => {
 }
 
 const getSubmissionPermission = async () => {
-    const http = require('http')
+    const https = require('https')
 
     try {
         const options = {
             hostname: ipAddress,
-            port: 3000,
             path: `/api/v1/user/getSubmissionPermission`,
             method: 'GET',
             headers: {
@@ -872,7 +860,7 @@ const getSubmissionPermission = async () => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -930,65 +918,83 @@ const loginApp = async () => {
     await init()
     loginCheck()
 
+    // Tested
     // User accesses dummy
     // loginUser('dummy', null, null, null, null, null, null, null, 'fab072301@gmail.com', null, null, '1234567890')
 
+    // Tested
     // User retrieves his/her own profile
-    // loginUser('getme')
+    // loginUser('getme', null, null, null, null, null, null, null, 'fab072301@gmail.com', null, null, '1234567890')
 
+    // Tested
     // User updates his/her profile
-    // loginUser('updateme', null, false, null, null, null, null, null, 'Kevin S. Trembley', 'kevinstrembley@dayrep.com', {
+    // loginUser('updateme', null, null, null, null, null, null, 'Muhammad Fuad bin Abdullah', 'fab072301@gmail.com', {
     //     ui: 'en',
     //     review: 'my'
-    // }, 'user')
+    // }, null, '1234567890', 'fab072301@gmail.com')
 
-    // User updates his/her account profile
-    // loginUser('updatemypassword', null, false, null, null, null, null, null, null, null, null, 'user', 'Ohz9ohPhu9')
+    // Tested
+    // User updates his/her account's password
+    // loginUser('updatemypassword', null, null, null, null, null, null, null, 'fab072301@gmail.com', null, 'user', '0987654321', null, '1234567890')
 
     // User deletes his/her account
     // loginUser('deleteme', null, false, null, null, null, null, null, null, null, 'user')
 
+    // Tested
     // User submits recital
-    // loginUser('submit', null, null, 114, 5, 'shorts', 'recite', '/audio4.mp3')
+    // loginUser('submit', null, null, 1, 7, 'fasihFatihah', '/audio1.mp3', null, 'fab072301@gmail.com', null, 'user', '1234567890')
 
+    // Tested
     // User retrieve a single recital
-    // loginUser('retrieve', '60ef30b7c3a4d21d7c549867')
+    // loginUser('retrieve', '60f6ccee6dd6af0011b16f13', null, null, null, null, null, null, 'fab072301@gmail.com', null, 'user', '1234567890')
 
+    // Tested
     // User retrieve all recitals with reviewed flag option
-    // loginUser('retrieve', null, false)
+    // loginUser('retrieve', null, false, null, null, null, null, null, 'fab072301@gmail.com', null, 'user', '1234567890')
 
+    // Tested
     // User retrieve his/her ReciteTime balance
-    // loginUser('getrtbalance')
+    // loginUser('getrtbalance', null, null, null, null, null, null, null, 'fab072301@gmail.com', null, 'user', '1234567890')
 
+    // Tested
     // User retrieve the permission to submit their recitals
-    // loginUser('getsubmissionpermission')
+    // loginUser('getsubmissionpermission', null, null, null, null, null, null, null, 'fab072301@gmail.com', null, 'user', '1234567890')
 
+    // Tested
     // CS accesses dummy
     // loginCS('dummy', null, 'aminahzulkifli@gmail.com', null, null, '0987654321')
 
+    // Tested
     // CS retrieves his/her own profile
-    // loginCS('getme')
+    // loginCS('getme', null, 'aminahzulkifli@gmail.com', null, null, '0987654321')
 
+    // Tested
     // CS updates his/her profile
-    // loginCS('updateme', 'Radeeyah Umayma Mustafa', 'radeeyahumaymamustafa@teleworm.us', {
+    // loginCS('updateme', 'Siti Aminah binti Zulkifli', 'aminahzulkifli@gmail.com', {
     //     ui: 'en',
     //     review: 'my'
-    // }, 'cs')
+    // }, 'cs', '0987654321', null, 'aminahzulkifli@gmail.com')
 
+    // Tested
     // CS updates his/her account's password
-    // loginCS('updatemypassword', null, null, null, 'cs', 'Iev1ujimoon')
+    // loginCS('updatemypassword', null, 'aminahzulkifli@gmail.com', null, 'cs', '1234567890', null, null, '0987654321')
 
     // CS deletes his/her account
     // loginCS('deleteme', null, null, null, 'cs')
 
+    // !!
+    // Encountered Error, cannot fetch the recital
     // CS submits his/her feedback of the selected user submission
-    // loginCS('submitfeedback', null, null, null, null, null, '60ef30b7c3a4d21d7c549867')
+    loginCS('submitfeedback', null, 'aminahzulkifli@gmail.com', null, 'cs', '0987654321', '60f6ccee6dd6af0011b16f13')
+    // !!
 
+    // Tested
     // Admin registers another admin
     // loginAdmin('register', null, null, 'Naho Nagasawa', 'ramadanrafique@gmail.com', '12340987', 'admin', true, null, 'NahoNagasawa@dayrep.com', 'aiz2Iwie2')
 
+    // Tested
     // Admin accesses dummy
-    loginAdmin('dummy', null, null, null, 'NahoNagasawa@dayrep.com', 'aiz2Iwie2')
+    // loginAdmin('dummy', null, null, null, 'NahoNagasawa@dayrep.com', 'aiz2Iwie2')
 
     // Admin sets recital by ID's reviewed flag 
     // loginAdmin('setreviewed', '60ef3072ced635296c8a26fc', false)
@@ -999,23 +1005,28 @@ const loginApp = async () => {
     // Admin retrieves all unreviewed submissions
     // loginAdmin('retrieve', null)
 
+    // Tested
     // Admin retrieves single CS profile by ID
-    // loginAdmin('getprofilecs', '60ef2c4962b90e4c60bea499')
+    // loginAdmin('getprofilecs', '60f473b1705671001148f877', null, null, 'ramadanrafique@gmail.com', '12340987')
 
+    // Tested
     // Admin retrieves all CS profiles
-    // loginAdmin('getprofilecs', null)
+    // loginAdmin('getprofilecs', null, null, null, 'ramadanrafique@gmail.com', '12340987')
 
+    // Tested
     // Admin retrieves his/her own profile
     // loginAdmin('getme', null, null, null, 'ramadanrafique@gmail.com', '12340987')
 
+    // Tested
     // Admin updates his/her profile
-    // loginAdmin('updateme', null, null, 'Chikaya Sahaku', 'chikayasahaku@jourrapide.com', null, 'admin', null, {
+    // loginAdmin('updateme', null, null, 'Ramadhan bin Rafique', 'ramadanrafique@gmail.com', '12340987', 'admin', null, {
     //     ui: 'en',
     //     review: 'my'
-    // }
+    // })
 
+    // Tested
     // Admin updates his/her account's password
-    // loginAdmin('updatemypassword', null, null, null, null, 'Ro7aeshie', 'admin')
+    // loginAdmin('updatemypassword', null, null, null, 'ramadanrafique@gmail.com', '12340987', 'admin', null, null, null, '1337abcd' )
 
     setTimeout(() => {
         app.auth().signOut().then(() => {
@@ -1033,7 +1044,7 @@ const forgotPasswordApp = async () => {
 
 const registrationApp = async () => {
     await init()
-    
+
     register('Ramadan bin Rafique', 'ramadanrafique@gmail.com', '12340987', 'user', false)
     // register('Siti Aminah binti Zulkifli', 'aminahzulkifli@gmail.com', '0987654321', 'cs', false)
     // register('Muhammad Fuad bin Abdullah', 'fab072301@gmail.com', '1234567890', 'user', false)
