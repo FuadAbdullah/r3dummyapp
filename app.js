@@ -982,11 +982,9 @@ const loginApp = async () => {
     // CS deletes his/her account
     // loginCS('deleteme', null, null, null, 'cs')
 
-    // !!
-    // Encountered Error, cannot fetch the recital
+    // Tested
     // CS submits his/her feedback of the selected user submission
-    loginCS('submitfeedback', null, 'aminahzulkifli@gmail.com', null, 'cs', '0987654321', '60f6ccee6dd6af0011b16f13')
-    // !!
+    // loginCS('submitfeedback', null, 'aminahzulkifli@gmail.com', null, 'cs', '0987654321', '60f6ccee6dd6af0011b16f13')
 
     // Tested
     // Admin registers another admin
