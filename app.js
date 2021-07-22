@@ -1,16 +1,16 @@
 const firebase = require('firebase')
 var app;
-const ipAddress = 'r-3-backend-uex48.ondigitalocean.app'
+const ipAddress = 'localhost'
 
 const init = async () => {
     const config = {
-        apiKey: "AIzaSyCPGmGung2Q8vImY4kIMYm1rX0RIoBCjNU",
-        authDomain: "recite-3.firebaseapp.com",
-        projectId: "recite-3",
-        storageBucket: "recite-3.appspot.com",
-        messagingSenderId: "581961862369",
-        appId: "1:581961862369:web:50d8f7e6b89fa6a7293ba0",
-        measurementId: "G-T5E5VF4DMJ"
+        apiKey: "AIzaSyCs1BgO4O0kkNkR3HapcTKSPAWJ3izlzto",
+        authDomain: "recite3admin.firebaseapp.com",
+        projectId: "recite3admin",
+        storageBucket: "recite3admin.appspot.com",
+        messagingSenderId: "308612611342",
+        appId: "1:308612611342:web:fad1bcefadc3aabb9d6b5f",
+        measurementId: "G-2WW9F9X9BY"
     }
 
     // Initialize app
@@ -63,6 +63,9 @@ const loginAdmin = async (flow, id, flag, name, email, password, role, auth, lan
                 case 'deleteme':
                     await deleteMe(role)
                     break
+                case 'lastsignin':
+                    await updateMyLastSignIn(role)
+                    break
                 default:
                     await getDummy()
             }
@@ -101,6 +104,9 @@ const loginCS = async (flow, name, email, languagePref, role, password, id, emai
                     break
                 case 'deleteme':
                     await deleteMe(role)
+                    break
+                case 'lastsignin':
+                    await updateMyLastSignIn(role)
                     break
                 default:
                     await getDummy()
@@ -149,6 +155,9 @@ const loginUser = async (flow, id, flag, chapter, verse, submissionType, submiss
                 case 'deleteme':
                     await deleteMe(role)
                     break
+                case 'lastsignin':
+                    await updateMyLastSignIn(role)
+                    break
                 default:
                     await getDummy()
             }
@@ -160,7 +169,7 @@ const loginUser = async (flow, id, flag, chapter, verse, submissionType, submiss
 }
 
 const register = async (name, email, password, role, auth) => {
-    const https = require('https')
+    const http = require('http')
 
     try {
         let path, options
@@ -206,7 +215,7 @@ const register = async (name, email, password, role, auth) => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -234,7 +243,7 @@ const getToken = async () => {
 }
 
 const getDummy = async () => {
-    const http = require('https')
+    const http = require('http')
 
     try {
 
@@ -270,7 +279,7 @@ const getDummy = async () => {
 }
 
 const submitRecital = async (chapter, verse, submissionType, submissionURL) => {
-    const https = require('https')
+    const http = require('http')
 
     try {
 
@@ -293,7 +302,7 @@ const submitRecital = async (chapter, verse, submissionType, submissionURL) => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -317,7 +326,7 @@ const submitRecital = async (chapter, verse, submissionType, submissionURL) => {
 }
 
 const getRecital = async (id, flag) => {
-    const https = require('https')
+    const http = require('http')
 
     try {
         let options
@@ -342,19 +351,19 @@ const getRecital = async (id, flag) => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
             let chunk = []
             res.on('data', data => {
-                chunk.push(data)
-            })
-            .on('end', () => {
-                let data = Buffer.concat(chunk)
-                let readableData = JSON.parse(data)
-                console.log(readableData)
-            })
+                    chunk.push(data)
+                })
+                .on('end', () => {
+                    let data = Buffer.concat(chunk)
+                    let readableData = JSON.parse(data)
+                    console.log(readableData)
+                })
 
             res.on('error', error => {
                 console.error(JSON.parse(error))
@@ -371,7 +380,7 @@ const getRecital = async (id, flag) => {
 }
 
 const setReviewedFlag = async (id, flag) => {
-    const https = require('https')
+    const http = require('http')
 
     try {
 
@@ -384,19 +393,19 @@ const setReviewedFlag = async (id, flag) => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
             let chunk = []
             res.on('data', data => {
-                chunk.push(data)
-            })
-            .on('end', () => {
-                let data = Buffer.concat(chunk)
-                let readableData = JSON.parse(data)
-                console.log(readableData)
-            })
+                    chunk.push(data)
+                })
+                .on('end', () => {
+                    let data = Buffer.concat(chunk)
+                    let readableData = JSON.parse(data)
+                    console.log(readableData)
+                })
 
             res.on('error', error => {
                 console.error(JSON.parse(error))
@@ -412,7 +421,7 @@ const setReviewedFlag = async (id, flag) => {
 }
 
 const getUnreviewedRecital = async (id) => {
-    const https = require('https')
+    const http = require('http')
 
     try {
         let options
@@ -437,19 +446,19 @@ const getUnreviewedRecital = async (id) => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
             let chunk = []
             res.on('data', data => {
-                chunk.push(data)
-            })
-            .on('end', () => {
-                let data = Buffer.concat(chunk)
-                let readableData = JSON.parse(data)
-                console.log(readableData)
-            })
+                    chunk.push(data)
+                })
+                .on('end', () => {
+                    let data = Buffer.concat(chunk)
+                    let readableData = JSON.parse(data)
+                    console.log(readableData)
+                })
 
             res.on('error', error => {
                 console.error(JSON.parse(error))
@@ -466,7 +475,7 @@ const getUnreviewedRecital = async (id) => {
 }
 
 const getCSProfile = async (id) => {
-    const https = require('https')
+    const http = require('http')
 
     try {
         let options
@@ -491,20 +500,20 @@ const getCSProfile = async (id) => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
             // Latest way to prevent JSON transmission from failing halfway
             let chunk = []
             res.on('data', data => {
-                chunk.push(data)
-            })
-            .on('end', () => {
-                let data = Buffer.concat(chunk)
-                let readableData = JSON.parse(data)
-                console.log(readableData)
-            })
+                    chunk.push(data)
+                })
+                .on('end', () => {
+                    let data = Buffer.concat(chunk)
+                    let readableData = JSON.parse(data)
+                    console.log(readableData)
+                })
             //////////////////////////////////////////////////////////////
 
             res.on('error', error => {
@@ -521,7 +530,7 @@ const getCSProfile = async (id) => {
 }
 
 const getMeAdmin = async () => {
-    const https = require('https')
+    const http = require('http')
 
     try {
         const options = {
@@ -533,7 +542,7 @@ const getMeAdmin = async () => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -555,7 +564,7 @@ const getMeAdmin = async () => {
 }
 
 const getMeCS = async () => {
-    const https = require('https')
+    const http = require('http')
 
     try {
         const options = {
@@ -567,7 +576,7 @@ const getMeCS = async () => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -589,7 +598,7 @@ const getMeCS = async () => {
 }
 
 const getMeUser = async () => {
-    const https = require('https')
+    const http = require('http')
 
     try {
         const options = {
@@ -601,7 +610,7 @@ const getMeUser = async () => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -623,7 +632,7 @@ const getMeUser = async () => {
 }
 
 const updateMe = async (name, email, languagePref, role) => {
-    const https = require('https')
+    const http = require('http')
 
     try {
         let path
@@ -656,7 +665,7 @@ const updateMe = async (name, email, languagePref, role) => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -680,7 +689,7 @@ const updateMe = async (name, email, languagePref, role) => {
 }
 
 const updateMyPassword = async (password, role) => {
-    const https = require('https')
+    const http = require('http')
 
     try {
         let path
@@ -711,7 +720,7 @@ const updateMyPassword = async (password, role) => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -735,7 +744,7 @@ const updateMyPassword = async (password, role) => {
 }
 
 const submitFeedback = async (id) => {
-    const https = require('https')
+    const http = require('http')
 
     try {
 
@@ -766,7 +775,7 @@ const submitFeedback = async (id) => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -790,7 +799,7 @@ const submitFeedback = async (id) => {
 }
 
 const getRTBalance = async () => {
-    const https = require('https')
+    const http = require('http')
 
     try {
         const options = {
@@ -802,7 +811,7 @@ const getRTBalance = async () => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -871,7 +880,7 @@ const deleteMe = async (role) => {
 }
 
 const getSubmissionPermission = async () => {
-    const https = require('https')
+    const http = require('http')
 
     try {
         const options = {
@@ -883,7 +892,56 @@ const getSubmissionPermission = async () => {
             }
         }
 
-        const req = https.request(options, (res) => {
+        const req = http.request(options, (res) => {
+            // console.log(req)
+            console.log(res.statusCode)
+
+            res.on('data', data => {
+                console.log(JSON.parse(data))
+            })
+
+            res.on('error', error => {
+                console.error(JSON.parse(error))
+            })
+        })
+
+        req.end()
+
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const updateMyLastSignIn = async (role) => {
+    const http = require('http')
+
+    let path
+
+    switch (role) {
+        case 'cs':
+            path = `/api/v1/cs/auth/updateMyLastSignIn`
+            break
+        case 'admin':
+            path = `/api/v1/admin/auth/updateMyLastSignIn`
+            break
+        default:
+            path = `/api/v1/user/auth/updateMyLastSignIn`
+
+    }
+
+    try {
+        const options = {
+            hostname: ipAddress,
+            port: 3000,
+            path: path,
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${await getToken()}`
+            }
+        }
+
+        const req = http.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -945,6 +1003,10 @@ const loginApp = async () => {
     // User accesses dummy
     // loginUser('dummy', null, null, null, null, null, null, null, 'fab072301@gmail.com', null, null, '1234567890')
 
+    // Tested, local
+    // User signs in and notify the backend
+    // loginUser('lastsignin', null, null, null, null, null, null, null, 'fab072301@gmail.com', null, 'user', '0123456789')
+
     // Tested
     // User retrieves his/her own profile
     // loginUser('getme', null, null, null, null, null, null, null, 'fab072301@gmail.com', null, null, '1234567890')
@@ -985,7 +1047,11 @@ const loginApp = async () => {
 
     // Tested
     // CS accesses dummy
-    // loginCS('dummy', null, 'aminahzulkifli@gmail.com', null, null, '0987654321')
+    // loginCS('dummy', null, 'NajibIyadDaher@armyspy.com', null, null, 'ahrahx3A')
+
+    // Tested, local
+    // CS signs in and notify the backend
+    // loginCS('lastsignin', null, 'NajibIyadDaher@armyspy.com', null, 'cs', 'ahrahx3A')
 
     // Tested
     // CS retrieves his/her own profile
@@ -1015,7 +1081,11 @@ const loginApp = async () => {
 
     // Tested
     // Admin accesses dummy
-    // loginAdmin('dummy', null, null, null, 'NahoNagasawa@dayrep.com', 'aiz2Iwie2')
+    // loginAdmin('dummy', null, null, null, 'DonaldLPower@armyspy.com', 'oorohPh7hah')
+
+    // Tested, local
+    // Admin signs in and notify the backend
+    // loginAdmin('lastsignin', null, null, null, 'DonaldLPower@armyspy.com', 'oorohPh7hah', 'admin')
 
     // Tested
     // Admin retrieves his/her own profile
