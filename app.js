@@ -46,7 +46,7 @@ const loginAdmin = async (flow, id, flag, name, email, password, role, auth, lan
                     await setReviewedFlag(id, flag)
                     break
                 case 'retrieve':
-                    await getUnreviewedRecital(id)
+                    await getAdminRecital(id, flag)
                     break
                 case 'getprofilecs':
                     await getCSProfile(id)
@@ -420,16 +420,18 @@ const setReviewedFlag = async (id, flag) => {
     }
 }
 
-const getUnreviewedRecital = async (id) => {
+const getAdminRecital = async (id, flag) => {
     const http = require('http')
 
-    try {
+    try {   
+
         let options
 
         if (id) {
             options = {
                 hostname: ipAddress,
-                path: `/api/v1/admin/recital/getRecital/${id}`,
+                port: 3000,
+                path: `/api/v1/admin/recital/getRecital/${id}?isReviewed=${flag}`,
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${await getToken()}`
@@ -438,7 +440,8 @@ const getUnreviewedRecital = async (id) => {
         } else {
             options = {
                 hostname: ipAddress,
-                path: `/api/v1/admin/recital/getRecitals/`,
+                port: 3000,
+                path: `/api/v1/admin/recital/getRecitals?isReviewed=${flag}`,
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${await getToken()}`
@@ -457,14 +460,18 @@ const getUnreviewedRecital = async (id) => {
                 .on('end', () => {
                     let data = Buffer.concat(chunk)
                     let readableData = JSON.parse(data)
+                    if (res.statusCode !== 200) {
+                        let errorData = JSON.parse(readableData['error'])
+                        console.error(`Success: ${readableData['success']}`)
+                        console.error(errorData)
+                        return
+                    }
                     console.log(readableData)
                 })
-
             res.on('error', error => {
                 console.error(JSON.parse(error))
             })
         })
-
 
         req.end()
 
@@ -1108,7 +1115,7 @@ const loginApp = async () => {
 
     // Tested
     // Admin retrieves single unreviewed submission by ID
-    // loginAdmin('retrieve', '60f71fbcd35a820011b4d294', null, null, 'ramadanrafique@gmail.com', '12340987')
+    loginAdmin('retrieve', null, true, null, 'DonaldLPower@armyspy.com', 'oorohPh7hah')
 
     // Tested
     // Admin retrieves all unreviewed submissions
