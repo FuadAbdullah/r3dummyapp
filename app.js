@@ -824,7 +824,7 @@ const getRTBalance = async () => {
 }
 
 const deleteMe = async (role) => {
-    const http = require('http')
+    const https = require('https')
 
     try {
         let path
@@ -841,7 +841,6 @@ const deleteMe = async (role) => {
 
         const options = {
             hostname: ipAddress,
-            port: 3000,
             path: path,
             method: 'PUT',
             headers: {
@@ -849,7 +848,7 @@ const deleteMe = async (role) => {
             }
         }
 
-        const req = http.request(options, (res) => {
+        const req = https.request(options, (res) => {
             // console.log(req)
             console.log(res.statusCode)
 
@@ -960,8 +959,10 @@ const loginApp = async () => {
     // User updates his/her account's password
     // loginUser('updatemypassword', null, null, null, null, null, null, null, 'fab072301@gmail.com', null, 'user', '0987654321', null, '1234567890')
 
+
+    // Tested
     // User deletes his/her account
-    // loginUser('deleteme', null, false, null, null, null, null, null, null, null, 'user')
+    // loginUser('deleteme', null, null, null, null, null, null, null, 'rukiahhassan@gmail.com', null, 'user', '12340987', null)
 
     // Tested
     // User submits recital
@@ -1101,4 +1102,4 @@ const registrationApp = async () => {
     // register('Majeeda Nazirah Fakhoury', 'MajeedaNazirahFakhoury@dayrep.com', 'Thahfo8aaJ', 'user', false)
 }
 
-loginApp()
+registrationApp()
